@@ -7,6 +7,8 @@
 #include "bit_cast.h"
 
 namespace Shader {
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Wbitfield-enum-conversion"
     #pragma pack(push, 1)
     template<size_t Start, size_t Count, typename Type>
     struct BitField {
@@ -25,7 +27,12 @@ namespace Shader {
         }
 
         constexpr Type Value() const {
-            return static_cast<Type>(item >> PaddingBits);
+            // Use a bitfield to force sign extension on the value
+            struct SextHelper {
+                Type value : Count;
+            };
+
+            return SextHelper{static_cast<Type>(item >> PaddingBits)}.value;
         }
 
         constexpr operator Type() const {
@@ -37,4 +44,5 @@ namespace Shader {
         }
     };
     #pragma pack(pop)
+    #pragma GCC diagnostic pop
 }
