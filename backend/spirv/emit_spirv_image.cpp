@@ -168,7 +168,7 @@ Id Texture(EmitContext& ctx, IR::TextureInstInfo info, [[maybe_unused]] const IR
 }
 
 Id TextureImage(EmitContext& ctx, IR::TextureInstInfo info, const IR::Value& index) {
-    if (!index.IsImmediate() || index.U32() != 0) {
+    if (index.Type() == IR::Type::U32 && (!index.IsImmediate() || index.U32() != 0)) {
         throw NotImplementedException("Indirect image indexing");
     }
     if (info.type == TextureType::Buffer) {
@@ -189,7 +189,7 @@ Id TextureImage(EmitContext& ctx, IR::TextureInstInfo info, const IR::Value& ind
 }
 
 Id Image(EmitContext& ctx, const IR::Value& index, IR::TextureInstInfo info) {
-    if (!index.IsImmediate() || index.U32() != 0) {
+    if (index.Type() == IR::Type::U32 && (!index.IsImmediate() || index.U32() != 0)) {
         throw NotImplementedException("Indirect image indexing");
     }
     if (info.type == TextureType::Buffer) {
