@@ -221,6 +221,7 @@ add_library(shader_recompiler STATIC
     ir_opt/dual_vertex_pass.cpp
     ir_opt/global_memory_to_storage_buffer_pass.cpp
     ir_opt/identity_removal_pass.cpp
+    ir_opt/layer_pass.cpp
     ir_opt/lower_fp16_to_fp32.cpp
     ir_opt/lower_int64_to_int32.cpp
     ir_opt/passes.h
@@ -230,6 +231,7 @@ add_library(shader_recompiler STATIC
     ir_opt/texture_pass.cpp
     ir_opt/verification_pass.cpp
     object_pool.h
+    precompiled_headers.h
     profile.h
     program_header.h
     runtime_info.h
@@ -254,7 +256,12 @@ else()
         # Bracket depth determines maximum size of a fold expression in Clang since 9c9974c3ccb6.
         # And this in turns limits the size of a std::array.
         $<$<CXX_COMPILER_ID:Clang>:-fbracket-depth=1024>
+        $<$<CXX_COMPILER_ID:AppleClang>:-fbracket-depth=1024>
     )
 endif()
 
 create_target_directory_groups(shader_recompiler)
+
+if (YUZU_USE_PRECOMPILED_HEADERS)
+    target_precompile_headers(shader_recompiler PRIVATE precompiled_headers.h)
+endif()
