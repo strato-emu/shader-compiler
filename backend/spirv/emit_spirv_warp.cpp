@@ -67,10 +67,26 @@ Id GetMaxThreadId(EmitContext& ctx, Id thread_id, Id clamp, Id segmentation_mask
     return ComputeMaxThreadId(ctx, min_thread_id, clamp, not_seg_mask);
 }
 
+Id EmulateShuffle(EmitContext& ctx, Id value, Id src_thread_id) {
+    if (!ctx.profile.max_subgroup_size)
+        throw InvalidArgument("Max subgroup size is not supplied but using shuffle emulation");
+
+    const Id thread_id{GetThreadId(ctx)};
+    Id result{ctx.u32_zero_value};
+
+    for (u32 i = 0; i < ctx.profile.max_subgroup_size; i++) {
+        const Id read{ctx.OpGroupNonUniformBroadcast(ctx.U32[1], SubgroupScope(ctx), value, ctx.Const(i))};
+        result = ctx.OpSelect(ctx.U32[1], ctx.OpIEqual(ctx.U1, src_thread_id, ctx.Const(i)), read, result);
+    }
+
+    return result;
+}
+
 Id SelectValue(EmitContext& ctx, Id in_range, Id value, Id src_thread_id) {
-    return ctx.OpSelect(
-        ctx.U32[1], in_range,
-        ctx.OpGroupNonUniformShuffle(ctx.U32[1], SubgroupScope(ctx), value, src_thread_id), value);
+    const Id shuffle_result{ctx.profile.has_broken_spirv_subgroup_shuffle ?
+        EmulateShuffle(ctx, value, src_thread_id) :
+        ctx.OpGroupNonUniformShuffle(ctx.U32[1], SubgroupScope(ctx), value,  src_thread_id)};
+    return ctx.OpSelect(ctx.U32[1], in_range, shuffle_result, value);
 }
 
 Id AddPartitionBase(EmitContext& ctx, Id thread_id) {

@@ -429,7 +429,10 @@ void SetupCapabilities(const Profile& profile, const Info& info, EmitContext& ct
          info.uses_subgroup_shuffles) &&
         profile.support_vote) {
         ctx.AddCapability(spv::Capability::GroupNonUniformBallot);
-        ctx.AddCapability(spv::Capability::GroupNonUniformShuffle);
+
+        if (!profile.has_broken_spirv_subgroup_shuffle) {
+            ctx.AddCapability(spv::Capability::GroupNonUniformShuffle);
+        }
         if (!profile.warp_size_potentially_larger_than_guest) {
             // vote ops are only used when not taking the long path
             ctx.AddCapability(spv::Capability::GroupNonUniformVote);
