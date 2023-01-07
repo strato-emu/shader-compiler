@@ -1,11 +1,11 @@
 // SPDX-FileCopyrightText: Copyright 2021 yuzu Emulator Project
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-#include "shader_recompiler/backend/glasm/emit_glasm_instructions.h"
-#include "shader_recompiler/backend/glasm/glasm_emit_context.h"
-#include "shader_recompiler/frontend/ir/program.h"
-#include "shader_recompiler/frontend/ir/value.h"
-#include "shader_recompiler/runtime_info.h"
+#include <shader_compiler/backend/glasm/emit_glasm_instructions.h>
+#include <shader_compiler/backend/glasm/glasm_emit_context.h>
+#include <shader_compiler/frontend/ir/program.h>
+#include <shader_compiler/frontend/ir/value.h>
+#include <shader_compiler/runtime_info.h>
 
 namespace Shader::Backend::GLASM {
 namespace {

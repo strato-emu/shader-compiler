@@ -1,16 +1,17 @@
 // SPDX-FileCopyrightText: Copyright 2021 yuzu Emulator Project
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-#include "shader_recompiler/backend/glasm/emit_glasm_instructions.h"
-#include "shader_recompiler/backend/glasm/glasm_emit_context.h"
-#include "shader_recompiler/frontend/ir/value.h"
+#include <range/v3/algorithm.hpp>
+#include <shader_compiler/backend/glasm/emit_glasm_instructions.h>
+#include <shader_compiler/backend/glasm/glasm_emit_context.h>
+#include <shader_compiler/frontend/ir/value.h>
 
 namespace Shader::Backend::GLASM {
 namespace {
 template <auto read_imm, char type, typename... Values>
 void CompositeConstruct(EmitContext& ctx, IR::Inst& inst, Values&&... elements) {
     const Register ret{ctx.reg_alloc.Define(inst)};
-    if (std::ranges::any_of(std::array{elements...},
+    if (ranges::any_of(std::array{elements...},
                             [](const IR::Value& value) { return value.IsImmediate(); })) {
         using Type = std::invoke_result_t<decltype(read_imm), IR::Value>;
         const std::array<Type, 4> values{(elements.IsImmediate() ? (elements.*read_imm)() : 0)...};

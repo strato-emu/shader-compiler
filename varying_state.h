@@ -6,7 +6,7 @@
 #include <bitset>
 #include <cstddef>
 
-#include "shader_recompiler/frontend/ir/attribute.h"
+#include <shader_compiler/frontend/ir/attribute.h>
 
 namespace Shader {
 

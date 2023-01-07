@@ -1,21 +1,22 @@
 // SPDX-FileCopyrightText: Copyright 2021 yuzu Emulator Project
 // SPDX-License-Identifier: GPL-2.0-or-later
 
+#include <range/v3/algorithm.hpp>
 #include <algorithm>
 #include <memory>
 #include <vector>
 #include <queue>
 
-#include "common/settings.h"
-#include "shader_recompiler/exception.h"
-#include "shader_recompiler/frontend/ir/basic_block.h"
-#include "shader_recompiler/frontend/ir/ir_emitter.h"
-#include "shader_recompiler/frontend/ir/post_order.h"
-#include "shader_recompiler/frontend/maxwell/structured_control_flow.h"
-#include "shader_recompiler/frontend/maxwell/translate/translate.h"
-#include "shader_recompiler/frontend/maxwell/translate_program.h"
-#include "shader_recompiler/host_translate_info.h"
-#include "shader_recompiler/ir_opt/passes.h"
+#include <shader_compiler/common/settings.h>
+#include <shader_compiler/exception.h>
+#include <shader_compiler/frontend/ir/basic_block.h>
+#include <shader_compiler/frontend/ir/ir_emitter.h>
+#include <shader_compiler/frontend/ir/post_order.h>
+#include <shader_compiler/frontend/maxwell/structured_control_flow.h>
+#include <shader_compiler/frontend/maxwell/translate/translate.h>
+#include <shader_compiler/frontend/maxwell/translate_program.h>
+#include <shader_compiler/host_translate_info.h>
+#include <shader_compiler/ir_opt/passes.h>
 
 namespace Shader::Maxwell {
 namespace {
@@ -115,7 +116,7 @@ void AddNVNStorageBuffers(IR::Program& program) {
             continue;
         }
         const u32 offset{base + index * descriptor_size};
-        const auto it{std::ranges::find(descs, offset, &StorageBufferDescriptor::cbuf_offset)};
+        const auto it{ranges::find(descs, offset, &StorageBufferDescriptor::cbuf_offset)};
         if (it != descs.end()) {
             it->is_written |= program.info.stores_global_memory;
             continue;
@@ -259,7 +260,7 @@ IR::Program TranslateProgram(ObjectPool<IR::Inst>& inst_pool, ObjectPool<IR::Blo
         program.is_geometry_passthrough = sph.common0.geometry_passthrough != 0;
         if (program.is_geometry_passthrough) {
             const auto& mask{env.GpPassthroughMask()};
-            for (size_t i = 0; i < program.info.passthrough.mask.size(); ++i) {
+            for (size_t i = 0; i < mask.size() * 32; ++i) {
                 program.info.passthrough.mask[i] = ((mask[i / 32] >> (i % 32)) & 1) == 0;
             }
 

@@ -5,10 +5,10 @@
 
 #include <optional>
 
-#include "common/common_types.h"
-#include "shader_recompiler/environment.h"
-#include "shader_recompiler/frontend/ir/reg.h"
-#include "shader_recompiler/frontend/maxwell/location.h"
+#include <shader_compiler/common/common_types.h>
+#include <shader_compiler/environment.h>
+#include <shader_compiler/frontend/ir/reg.h>
+#include <shader_compiler/frontend/maxwell/location.h>
 
 namespace Shader::Maxwell {
 

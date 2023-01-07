@@ -4,7 +4,7 @@
 #include <array>
 #include <string>
 
-#include "shader_recompiler/frontend/ir/type.h"
+#include <shader_compiler/frontend/ir/type.h>
 
 namespace Shader::IR {
 

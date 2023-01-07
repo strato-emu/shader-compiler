@@ -6,9 +6,9 @@
 
 #include <fmt/format.h>
 
-#include "shader_recompiler/frontend/ir/basic_block.h"
-#include "shader_recompiler/frontend/ir/program.h"
-#include "shader_recompiler/frontend/ir/value.h"
+#include <shader_compiler/frontend/ir/basic_block.h>
+#include <shader_compiler/frontend/ir/program.h>
+#include <shader_compiler/frontend/ir/value.h>
 
 namespace Shader::IR {
 

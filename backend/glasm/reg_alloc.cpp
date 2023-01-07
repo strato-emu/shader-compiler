@@ -3,9 +3,9 @@
 
 #include <fmt/format.h>
 
-#include "shader_recompiler/backend/glasm/reg_alloc.h"
-#include "shader_recompiler/exception.h"
-#include "shader_recompiler/frontend/ir/value.h"
+#include <shader_compiler/backend/glasm/reg_alloc.h>
+#include <shader_compiler/exception.h>
+#include <shader_compiler/frontend/ir/value.h>
 
 namespace Shader::Backend::GLASM {
 

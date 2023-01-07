@@ -1,16 +1,16 @@
 // SPDX-FileCopyrightText: Copyright 2021 yuzu Emulator Project
 // SPDX-License-Identifier: GPL-2.0-or-later
 
+#include <range/v3/algorithm.hpp>
 #include <algorithm>
 #include <array>
 #include <bit>
 #include <memory>
 
-#include "common/common_types.h"
-#include "common/polyfill_ranges.h"
-#include "shader_recompiler/exception.h"
-#include "shader_recompiler/frontend/maxwell/decode.h"
-#include "shader_recompiler/frontend/maxwell/opcodes.h"
+#include <shader_compiler/common/common_types.h>
+#include <shader_compiler/exception.h>
+#include <shader_compiler/frontend/maxwell/decode.h>
+#include <shader_compiler/frontend/maxwell/opcodes.h>
 
 namespace Shader::Maxwell {
 namespace {
@@ -63,7 +63,7 @@ constexpr std::array UNORDERED_ENCODINGS{
 
 constexpr auto SortedEncodings() {
     std::array encodings{UNORDERED_ENCODINGS};
-    std::ranges::sort(encodings, [](const InstEncoding& lhs, const InstEncoding& rhs) {
+    std::sort(encodings.begin(), encodings.end(), [](const InstEncoding& lhs, const InstEncoding& rhs) {
         return std::popcount(lhs.mask_value.mask) > std::popcount(rhs.mask_value.mask);
     });
     return encodings;
@@ -137,7 +137,7 @@ const auto FAST_LOOKUP_TABLE{MakeFastLookupTable()};
 
 Opcode Decode(u64 insn) {
     const auto& table{(*FAST_LOOKUP_TABLE)[ToFastLookupIndex(insn)]};
-    const auto it{std::ranges::find_if(
+    const auto it{ranges::find_if(
         table, [insn](const InstInfo& info) { return (insn & info.Mask()) == info.Value(); })};
     if (it == table.end()) {
         throw NotImplementedException("Instruction 0x{:016x} is unknown / unimplemented", insn);

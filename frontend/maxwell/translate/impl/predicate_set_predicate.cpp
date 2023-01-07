@@ -1,10 +1,10 @@
 // SPDX-FileCopyrightText: Copyright 2021 yuzu Emulator Project
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-#include "common/bit_field.h"
-#include "common/common_types.h"
-#include "shader_recompiler/frontend/maxwell/translate/impl/common_funcs.h"
-#include "shader_recompiler/frontend/maxwell/translate/impl/impl.h"
+#include <shader_compiler/common/bit_field.h>
+#include <shader_compiler/common/common_types.h>
+#include <shader_compiler/frontend/maxwell/translate/impl/common_funcs.h>
+#include <shader_compiler/frontend/maxwell/translate/impl/impl.h>
 
 namespace Shader::Maxwell {
 void TranslatorVisitor::PSETP(u64 insn) {

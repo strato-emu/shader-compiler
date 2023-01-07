@@ -3,8 +3,8 @@
 
 #pragma once
 
-#include "common/common_types.h"
-#include "shader_recompiler/frontend/maxwell/translate/impl/impl.h"
+#include <shader_compiler/common/common_types.h>
+#include <shader_compiler/frontend/maxwell/translate/impl/impl.h>
 
 namespace Shader::Maxwell {
 enum class VideoWidth : u64 {

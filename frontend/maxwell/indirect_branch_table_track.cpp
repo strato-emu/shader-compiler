@@ -3,12 +3,12 @@
 
 #include <optional>
 
-#include "common/common_types.h"
-#include "shader_recompiler/exception.h"
-#include "shader_recompiler/frontend/maxwell/decode.h"
-#include "shader_recompiler/frontend/maxwell/indirect_branch_table_track.h"
-#include "shader_recompiler/frontend/maxwell/opcodes.h"
-#include "shader_recompiler/frontend/maxwell/translate/impl/load_constant.h"
+#include <shader_compiler/common/common_types.h>
+#include <shader_compiler/exception.h>
+#include <shader_compiler/frontend/maxwell/decode.h>
+#include <shader_compiler/frontend/maxwell/indirect_branch_table_track.h>
+#include <shader_compiler/frontend/maxwell/opcodes.h>
+#include <shader_compiler/frontend/maxwell/translate/impl/load_constant.h>
 
 namespace Shader::Maxwell {
 namespace {

@@ -1,12 +1,12 @@
 // SPDX-FileCopyrightText: Copyright 2021 yuzu Emulator Project
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-#include "common/bit_field.h"
-#include "common/common_types.h"
-#include "shader_recompiler/frontend/ir/ir_emitter.h"
-#include "shader_recompiler/frontend/ir/modifiers.h"
-#include "shader_recompiler/frontend/maxwell/translate/impl/common_encoding.h"
-#include "shader_recompiler/frontend/maxwell/translate/impl/impl.h"
+#include <shader_compiler/common/bit_field.h>
+#include <shader_compiler/common/common_types.h>
+#include <shader_compiler/frontend/ir/ir_emitter.h>
+#include <shader_compiler/frontend/ir/modifiers.h>
+#include <shader_compiler/frontend/maxwell/translate/impl/common_encoding.h>
+#include <shader_compiler/frontend/maxwell/translate/impl/impl.h>
 
 namespace Shader::Maxwell {
 namespace {

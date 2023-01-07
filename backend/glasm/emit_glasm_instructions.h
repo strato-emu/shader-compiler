@@ -3,8 +3,8 @@
 
 #pragma once
 
-#include "common/common_types.h"
-#include "shader_recompiler/backend/glasm/reg_alloc.h"
+#include <shader_compiler/common/common_types.h>
+#include <shader_compiler/backend/glasm/reg_alloc.h>
 
 namespace Shader::IR {
 enum class Attribute : u64;

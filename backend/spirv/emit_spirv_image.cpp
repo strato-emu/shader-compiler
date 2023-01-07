@@ -3,10 +3,10 @@
 
 #include <boost/container/static_vector.hpp>
 
-#include "shader_recompiler/backend/spirv/emit_spirv.h"
-#include "shader_recompiler/backend/spirv/emit_spirv_instructions.h"
-#include "shader_recompiler/backend/spirv/spirv_emit_context.h"
-#include "shader_recompiler/frontend/ir/modifiers.h"
+#include <shader_compiler/backend/spirv/emit_spirv.h>
+#include <shader_compiler/backend/spirv/emit_spirv_instructions.h>
+#include <shader_compiler/backend/spirv/spirv_emit_context.h>
+#include <shader_compiler/frontend/ir/modifiers.h>
 
 namespace Shader::Backend::SPIRV {
 namespace {

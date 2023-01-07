@@ -1,6 +1,7 @@
 // SPDX-FileCopyrightText: Copyright 2021 yuzu Emulator Project
 // SPDX-License-Identifier: GPL-2.0-or-later
 
+#include <range/v3/algorithm.hpp>
 #include <algorithm>
 #include <array>
 #include <optional>
@@ -9,12 +10,11 @@
 
 #include <fmt/format.h>
 
-#include "common/polyfill_ranges.h"
-#include "shader_recompiler/exception.h"
-#include "shader_recompiler/frontend/maxwell/control_flow.h"
-#include "shader_recompiler/frontend/maxwell/decode.h"
-#include "shader_recompiler/frontend/maxwell/indirect_branch_table_track.h"
-#include "shader_recompiler/frontend/maxwell/location.h"
+#include <shader_compiler/exception.h>
+#include <shader_compiler/frontend/maxwell/control_flow.h>
+#include <shader_compiler/frontend/maxwell/decode.h>
+#include <shader_compiler/frontend/maxwell/indirect_branch_table_track.h>
+#include <shader_compiler/frontend/maxwell/location.h>
 
 namespace Shader::Maxwell::Flow {
 namespace {
@@ -254,7 +254,7 @@ bool CFG::InspectVisitedBlocks(FunctionId function_id, const Label& label) {
     const Location pc{label.address};
     Function& function{functions[function_id]};
     const auto it{
-        std::ranges::find_if(function.blocks, [pc](auto& block) { return block.Contains(pc); })};
+        ranges::find_if(function.blocks, [pc](auto& block) { return block.Contains(pc); })};
     if (it == function.blocks.end()) {
         // Address has not been visited
         return false;
@@ -331,7 +331,7 @@ CFG::AnalysisState CFG::AnalyzeInst(Block* block, FunctionId function_id, Locati
         const Location cal_pc{is_absolute ? inst.branch.Absolute() : BranchOffset(pc, inst)};
         // Technically CAL pushes into PRET, but that's implicit in the function call for us
         // Insert the function into the list if it doesn't exist
-        const auto it{std::ranges::find(functions, cal_pc, &Function::entrypoint)};
+        const auto it{ranges::find(functions, cal_pc, &Function::entrypoint)};
         const bool exists{it != functions.end()};
         const FunctionId call_id{exists ? static_cast<size_t>(std::distance(functions.begin(), it))
                                         : functions.size()};
@@ -449,7 +449,7 @@ CFG::AnalysisState CFG::AnalyzeBRX(Block* block, Location pc, Instruction inst, 
         target += 8;
         targets.push_back(target);
     }
-    std::ranges::sort(targets);
+    ranges::sort(targets);
     targets.erase(std::unique(targets.begin(), targets.end()), targets.end());
 
     block->indirect_branches.reserve(targets.size());
@@ -539,7 +539,7 @@ Block* CFG::AddLabel(Block* block, Stack stack, Location pc, FunctionId function
         return &*it;
     }
     // Make sure we don't insert the same layer twice
-    const auto label_it{std::ranges::find(function.labels, pc, &Label::address)};
+    const auto label_it{ranges::find(function.labels, pc, &Label::address)};
     if (label_it != function.labels.end()) {
         return label_it->block;
     }

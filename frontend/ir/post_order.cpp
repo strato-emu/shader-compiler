@@ -1,13 +1,14 @@
 // SPDX-FileCopyrightText: Copyright 2021 yuzu Emulator Project
 // SPDX-License-Identifier: GPL-2.0-or-later
 
+#include <range/v3/algorithm.hpp>
 #include <algorithm>
 
 #include <boost/container/flat_set.hpp>
 #include <boost/container/small_vector.hpp>
 
-#include "shader_recompiler/frontend/ir/basic_block.h"
-#include "shader_recompiler/frontend/ir/post_order.h"
+#include <shader_compiler/frontend/ir/basic_block.h>
+#include <shader_compiler/frontend/ir/post_order.h>
 
 namespace Shader::IR {
 
@@ -35,7 +36,7 @@ BlockList PostOrder(const AbstractSyntaxNode& root) {
             return true;
         }};
         block_stack.pop_back();
-        if (std::ranges::none_of(block->ImmSuccessors(), visit)) {
+        if (ranges::none_of(block->ImmSuccessors(), visit)) {
             post_order_blocks.push_back(block);
         }
     }

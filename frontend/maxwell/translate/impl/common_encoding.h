@@ -3,10 +3,10 @@
 
 #pragma once
 
-#include "common/common_types.h"
-#include "shader_recompiler/exception.h"
-#include "shader_recompiler/frontend/ir/modifiers.h"
-#include "shader_recompiler/frontend/maxwell/translate/impl/common_encoding.h"
+#include <shader_compiler/common/common_types.h>
+#include <shader_compiler/exception.h>
+#include <shader_compiler/frontend/ir/modifiers.h>
+#include <shader_compiler/frontend/maxwell/translate/impl/common_encoding.h>
 
 namespace Shader::Maxwell {
 

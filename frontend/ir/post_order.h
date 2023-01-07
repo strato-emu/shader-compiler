@@ -3,8 +3,8 @@
 
 #pragma once
 
-#include "shader_recompiler/frontend/ir/abstract_syntax_list.h"
-#include "shader_recompiler/frontend/ir/basic_block.h"
+#include <shader_compiler/frontend/ir/abstract_syntax_list.h>
+#include <shader_compiler/frontend/ir/basic_block.h>
 
 namespace Shader::IR {
 

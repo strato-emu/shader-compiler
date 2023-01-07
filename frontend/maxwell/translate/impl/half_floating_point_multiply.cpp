@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: Copyright 2021 yuzu Emulator Project
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-#include "shader_recompiler/frontend/maxwell/translate/impl/half_floating_point_helper.h"
+#include <shader_compiler/frontend/maxwell/translate/impl/half_floating_point_helper.h>
 
 namespace Shader::Maxwell {
 namespace {

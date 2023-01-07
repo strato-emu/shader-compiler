@@ -1,18 +1,19 @@
 // SPDX-FileCopyrightText: Copyright 2021 yuzu Emulator Project
 // SPDX-License-Identifier: GPL-2.0-or-later
 
+#include <range/v3/algorithm.hpp>
 #include <optional>
 
 #include <boost/container/flat_set.hpp>
 #include <boost/container/small_vector.hpp>
 
-#include "common/alignment.h"
-#include "shader_recompiler/frontend/ir/basic_block.h"
-#include "shader_recompiler/frontend/ir/breadth_first_search.h"
-#include "shader_recompiler/frontend/ir/ir_emitter.h"
-#include "shader_recompiler/frontend/ir/value.h"
-#include "shader_recompiler/host_translate_info.h"
-#include "shader_recompiler/ir_opt/passes.h"
+#include <shader_compiler/common/alignment.h>
+#include <shader_compiler/frontend/ir/basic_block.h>
+#include <shader_compiler/frontend/ir/breadth_first_search.h>
+#include <shader_compiler/frontend/ir/ir_emitter.h>
+#include <shader_compiler/frontend/ir/value.h>
+#include <shader_compiler/host_translate_info.h>
+#include <shader_compiler/ir_opt/passes.h>
 
 namespace Shader::Optimization {
 namespace {
@@ -547,7 +548,7 @@ void GlobalMemoryToStorageBufferPass(IR::Program& program, const HostTranslateIn
 template <typename Descriptors, typename Descriptor, typename Func>
 static u32 Add(Descriptors& descriptors, const Descriptor& desc, Func&& pred) {
     // TODO: Handle arrays
-    const auto it{std::ranges::find_if(descriptors, pred)};
+    const auto it{ranges::find_if(descriptors, pred)};
     if (it != descriptors.end()) {
         return static_cast<u32>(std::distance(descriptors.begin(), it));
     }
@@ -558,7 +559,7 @@ static u32 Add(Descriptors& descriptors, const Descriptor& desc, Func&& pred) {
 void JoinStorageInfo(Info& base, Info& source) {
     auto& descriptors = base.storage_buffers_descriptors;
     for (auto& desc : source.storage_buffers_descriptors) {
-        auto it{std::ranges::find_if(descriptors, [&desc](const auto& existing) {
+        auto it{ranges::find_if(descriptors, [&desc](const auto& existing) {
             return desc.cbuf_index == existing.cbuf_index &&
                    desc.cbuf_offset == existing.cbuf_offset && desc.count == existing.count;
         })};

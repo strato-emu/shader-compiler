@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "shader_recompiler/frontend/maxwell/translate/impl/impl.h"
+#include <shader_compiler/frontend/maxwell/translate/impl/impl.h>
 
 namespace Shader::Maxwell {
 [[nodiscard]] IR::U1 IntegerCompare(IR::IREmitter& ir, const IR::U32& operand_1,

@@ -7,7 +7,7 @@
 #include <climits>
 #include <cstddef>
 
-#include "common/common_types.h"
+#include <shader_compiler/common/common_types.h>
 
 namespace Common {
 

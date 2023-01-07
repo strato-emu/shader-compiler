@@ -3,8 +3,8 @@
 
 #include <array>
 
-#include "shader_recompiler/exception.h"
-#include "shader_recompiler/frontend/maxwell/opcodes.h"
+#include <shader_compiler/exception.h>
+#include <shader_compiler/frontend/maxwell/opcodes.h>
 
 namespace Shader::Maxwell {
 namespace {

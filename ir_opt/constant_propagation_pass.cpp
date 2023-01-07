@@ -1,17 +1,18 @@
 // SPDX-FileCopyrightText: Copyright 2021 yuzu Emulator Project
 // SPDX-License-Identifier: GPL-2.0-or-later
 
+#include <range/v3/algorithm.hpp>
 #include <algorithm>
 #include <functional>
 #include <tuple>
 #include <type_traits>
 
-#include "common/bit_cast.h"
-#include "shader_recompiler/environment.h"
-#include "shader_recompiler/exception.h"
-#include "shader_recompiler/frontend/ir/ir_emitter.h"
-#include "shader_recompiler/frontend/ir/value.h"
-#include "shader_recompiler/ir_opt/passes.h"
+#include <shader_compiler/common/bit_cast.h>
+#include <shader_compiler/environment.h>
+#include <shader_compiler/exception.h>
+#include <shader_compiler/frontend/ir/ir_emitter.h>
+#include <shader_compiler/frontend/ir/value.h>
+#include <shader_compiler/ir_opt/passes.h>
 
 namespace Shader::Optimization {
 namespace {
@@ -105,7 +106,7 @@ bool AreEqual(const Range& range) {
         }
         return false;
     }};
-    return std::ranges::adjacent_find(range, std::not_fn(equal), resolver) == std::end(range);
+    return ranges::adjacent_find(range, std::not_fn(equal), resolver) == std::end(range);
 }
 
 void FoldGetRegister(IR::Inst& inst) {

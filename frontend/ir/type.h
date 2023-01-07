@@ -7,8 +7,8 @@
 
 #include <fmt/format.h>
 
-#include "common/common_funcs.h"
-#include "shader_recompiler/exception.h"
+#include <shader_compiler/common/common_funcs.h>
+#include <shader_compiler/exception.h>
 
 namespace Shader::IR {
 

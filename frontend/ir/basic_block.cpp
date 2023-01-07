@@ -1,13 +1,14 @@
 // SPDX-FileCopyrightText: Copyright 2021 yuzu Emulator Project
 // SPDX-License-Identifier: GPL-2.0-or-later
 
+#include <range/v3/algorithm.hpp>
 #include <algorithm>
 #include <initializer_list>
 #include <map>
 
-#include "common/common_types.h"
-#include "shader_recompiler/frontend/ir/basic_block.h"
-#include "shader_recompiler/frontend/ir/value.h"
+#include <shader_compiler/common/common_types.h>
+#include <shader_compiler/frontend/ir/basic_block.h>
+#include <shader_compiler/frontend/ir/value.h>
 
 namespace Shader::IR {
 
@@ -32,7 +33,7 @@ Block::iterator Block::PrependNewInst(iterator insertion_point, Opcode op,
     if (inst->NumArgs() != args.size()) {
         throw InvalidArgument("Invalid number of arguments {} in {}", args.size(), op);
     }
-    std::ranges::for_each(args, [inst, index = size_t{0}](const Value& arg) mutable {
+    ranges::for_each(args, [inst, index = size_t{0}](const Value& arg) mutable {
         inst->SetArg(index, arg);
         ++index;
     });
@@ -40,10 +41,10 @@ Block::iterator Block::PrependNewInst(iterator insertion_point, Opcode op,
 }
 
 void Block::AddBranch(Block* block) {
-    if (std::ranges::find(imm_successors, block) != imm_successors.end()) {
+    if (ranges::find(imm_successors, block) != imm_successors.end()) {
         throw LogicError("Successor already inserted");
     }
-    if (std::ranges::find(block->imm_predecessors, this) != block->imm_predecessors.end()) {
+    if (ranges::find(block->imm_predecessors, this) != block->imm_predecessors.end()) {
         throw LogicError("Predecessor already inserted");
     }
     imm_successors.push_back(block);

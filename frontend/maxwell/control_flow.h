@@ -11,13 +11,13 @@
 #include <boost/container/small_vector.hpp>
 #include <boost/intrusive/set.hpp>
 
-#include "shader_recompiler/environment.h"
-#include "shader_recompiler/frontend/ir/condition.h"
-#include "shader_recompiler/frontend/ir/reg.h"
-#include "shader_recompiler/frontend/maxwell/instruction.h"
-#include "shader_recompiler/frontend/maxwell/location.h"
-#include "shader_recompiler/frontend/maxwell/opcodes.h"
-#include "shader_recompiler/object_pool.h"
+#include <shader_compiler/environment.h>
+#include <shader_compiler/frontend/ir/condition.h>
+#include <shader_compiler/frontend/ir/reg.h>
+#include <shader_compiler/frontend/maxwell/instruction.h>
+#include <shader_compiler/frontend/maxwell/location.h>
+#include <shader_compiler/frontend/maxwell/opcodes.h>
+#include <shader_compiler/object_pool.h>
 
 namespace Shader::Maxwell::Flow {
 

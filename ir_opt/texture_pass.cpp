@@ -1,19 +1,20 @@
 // SPDX-FileCopyrightText: Copyright 2021 yuzu Emulator Project
 // SPDX-License-Identifier: GPL-2.0-or-later
 
+#include <range/v3/algorithm.hpp>
 #include <algorithm>
 #include <bit>
 #include <optional>
 
 #include <boost/container/small_vector.hpp>
 
-#include "shader_recompiler/environment.h"
-#include "shader_recompiler/frontend/ir/basic_block.h"
-#include "shader_recompiler/frontend/ir/breadth_first_search.h"
-#include "shader_recompiler/frontend/ir/ir_emitter.h"
-#include "shader_recompiler/host_translate_info.h"
-#include "shader_recompiler/ir_opt/passes.h"
-#include "shader_recompiler/shader_info.h"
+#include <shader_compiler/environment.h>
+#include <shader_compiler/frontend/ir/basic_block.h>
+#include <shader_compiler/frontend/ir/breadth_first_search.h>
+#include <shader_compiler/frontend/ir/ir_emitter.h>
+#include <shader_compiler/host_translate_info.h>
+#include <shader_compiler/ir_opt/passes.h>
+#include <shader_compiler/shader_info.h>
 
 namespace Shader::Optimization {
 namespace {
@@ -432,7 +433,7 @@ private:
     template <typename Descriptors, typename Descriptor, typename Func>
     static u32 Add(Descriptors& descriptors, const Descriptor& desc, Func&& pred) {
         // TODO: Handle arrays
-        const auto it{std::ranges::find_if(descriptors, pred)};
+        const auto it{ranges::find_if(descriptors, pred)};
         if (it != descriptors.end()) {
             return static_cast<u32>(std::distance(descriptors.begin(), it));
         }
@@ -505,7 +506,7 @@ void TexturePass(Environment& env, IR::Program& program, const HostTranslateInfo
         }
     }
     // Sort instructions to visit textures by constant buffer index, then by offset
-    std::ranges::sort(to_replace, [](const auto& lhs, const auto& rhs) {
+    ranges::sort(to_replace, [](const auto& lhs, const auto& rhs) {
         return lhs.cbuf.offset < rhs.cbuf.offset;
     });
     std::stable_sort(to_replace.begin(), to_replace.end(), [](const auto& lhs, const auto& rhs) {

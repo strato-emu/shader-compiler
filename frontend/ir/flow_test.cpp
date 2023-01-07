@@ -5,7 +5,7 @@
 
 #include <fmt/format.h>
 
-#include "shader_recompiler/frontend/ir/flow_test.h"
+#include <shader_compiler/frontend/ir/flow_test.h>
 
 namespace Shader::IR {
 

@@ -6,10 +6,10 @@
 #include <cstring>
 #include <type_traits>
 
-#include "shader_recompiler/frontend/ir/attribute.h"
-#include "shader_recompiler/frontend/ir/basic_block.h"
-#include "shader_recompiler/frontend/ir/modifiers.h"
-#include "shader_recompiler/frontend/ir/value.h"
+#include <shader_compiler/frontend/ir/attribute.h>
+#include <shader_compiler/frontend/ir/basic_block.h>
+#include <shader_compiler/frontend/ir/modifiers.h>
+#include <shader_compiler/frontend/ir/value.h>
 
 namespace Shader::IR {
 

@@ -7,12 +7,12 @@
 #include <utility>
 #include <vector>
 
-#include "common/settings.h"
-#include "shader_recompiler/backend/spirv/emit_spirv.h"
-#include "shader_recompiler/backend/spirv/emit_spirv_instructions.h"
-#include "shader_recompiler/backend/spirv/spirv_emit_context.h"
-#include "shader_recompiler/frontend/ir/basic_block.h"
-#include "shader_recompiler/frontend/ir/program.h"
+#include <shader_compiler/common/settings.h>
+#include <shader_compiler/backend/spirv/emit_spirv.h>
+#include <shader_compiler/backend/spirv/emit_spirv_instructions.h>
+#include <shader_compiler/backend/spirv/spirv_emit_context.h>
+#include <shader_compiler/frontend/ir/basic_block.h>
+#include <shader_compiler/frontend/ir/program.h>
 
 namespace Shader::Backend::SPIRV {
 namespace {
@@ -100,7 +100,7 @@ void EmitInst(EmitContext& ctx, IR::Inst* inst) {
 #define OPCODE(name, result_type, ...)                                                             \
     case IR::Opcode::name:                                                                         \
         return Invoke<&Emit##name>(ctx, inst);
-#include "shader_recompiler/frontend/ir/opcodes.inc"
+#include <shader_compiler/frontend/ir/opcodes.inc>
 #undef OPCODE
     }
     throw LogicError("Invalid opcode {}", inst->GetOpcode());

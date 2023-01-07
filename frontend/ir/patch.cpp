@@ -1,8 +1,8 @@
 // SPDX-FileCopyrightText: Copyright 2021 yuzu Emulator Project
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-#include "shader_recompiler/exception.h"
-#include "shader_recompiler/frontend/ir/patch.h"
+#include <shader_compiler/exception.h>
+#include <shader_compiler/frontend/ir/patch.h>
 
 namespace Shader::IR {
 

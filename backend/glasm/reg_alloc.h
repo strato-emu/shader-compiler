@@ -7,10 +7,10 @@
 
 #include <fmt/format.h>
 
-#include "common/bit_cast.h"
-#include "common/bit_field.h"
-#include "common/common_types.h"
-#include "shader_recompiler/exception.h"
+#include <shader_compiler/common/bit_cast.h>
+#include <shader_compiler/common/bit_field.h>
+#include <shader_compiler/common/common_types.h>
+#include <shader_compiler/exception.h>
 
 namespace Shader::IR {
 class Inst;
