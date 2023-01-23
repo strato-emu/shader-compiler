@@ -83,9 +83,14 @@ Id EmulateShuffle(EmitContext& ctx, Id value, Id src_thread_id) {
 }
 
 Id SelectValue(EmitContext& ctx, Id in_range, Id value, Id src_thread_id) {
-    const Id shuffle_result{ctx.profile.has_broken_spirv_subgroup_shuffle ?
-        EmulateShuffle(ctx, value, src_thread_id) :
-        ctx.OpGroupNonUniformShuffle(ctx.U32[1], SubgroupScope(ctx), value,  src_thread_id)};
+    const Id shuffle_result{[&] () {
+        if (ctx.profile.disable_subgroup_shuffle)
+            return value;
+        else if (ctx.profile.has_broken_spirv_subgroup_shuffle)
+            return EmulateShuffle(ctx, value, src_thread_id);
+        else
+            return ctx.OpGroupNonUniformShuffle(ctx.U32[1], SubgroupScope(ctx), value,  src_thread_id);
+    }()};
     return ctx.OpSelect(ctx.U32[1], in_range, shuffle_result, value);
 }
 
