@@ -129,23 +129,25 @@ void EmitEmitVertex(EmitContext& ctx, const IR::Value& stream) {
     if (ctx.runtime_info.convert_depth_mode && !ctx.profile.support_native_ndc) {
         ConvertDepthMode(ctx);
     }
-    if (stream.IsImmediate()) {
-        ctx.OpEmitStreamVertex(ctx.Def(stream));
-    } else {
+
+    if (!stream.IsImmediate()) {
         LOG_WARNING(Shader_SPIRV, "Stream is not immediate");
-        ctx.OpEmitStreamVertex(ctx.u32_zero_value);
     }
+
+    // TODO: When geometry streams are supported, when a shader uses >1 stream OpEmitStreamVertex must be used instead
+    ctx.OpEmitVertex();
+
     // Restore fixed pipeline point size after emitting the vertex
     SetFixedPipelinePointSize(ctx);
 }
 
 void EmitEndPrimitive(EmitContext& ctx, const IR::Value& stream) {
-    if (stream.IsImmediate()) {
-        ctx.OpEndStreamPrimitive(ctx.Def(stream));
-    } else {
+    if (!stream.IsImmediate()) {
         LOG_WARNING(Shader_SPIRV, "Stream is not immediate");
-        ctx.OpEndStreamPrimitive(ctx.u32_zero_value);
     }
+
+    // TODO: When geometry streams are supported, if a shader uses >1 stream OpEndPrimitive must be used instead
+    ctx.OpEndPrimitive();
 }
 
 } // namespace Shader::Backend::SPIRV
