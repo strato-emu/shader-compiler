@@ -276,7 +276,7 @@ void DefineConstBuffers(EmitContext& ctx, const Info& info, Id UniformDefinition
         const Id id{ctx.AddGlobalVariable(struct_pointer_type, spv::StorageClass::Uniform)};
         ctx.Decorate(id, spv::Decoration::Binding, binding);
         ctx.Decorate(id, spv::Decoration::DescriptorSet, 0U);
-        ctx.Name(id, fmt::format("c{}", desc.index));
+        ctx.Name(id, fmt::format("c{}_{}_{}", desc.index, type_char, element_size));
         for (size_t i = 0; i < desc.count; ++i) {
             ctx.cbufs[desc.index + i].*member_type = id;
         }
