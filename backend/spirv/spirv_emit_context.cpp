@@ -1071,7 +1071,7 @@ void EmitContext::DefineConstantBuffers(const Info& info, u32& binding) {
             types |= IR::Type::U32;
         }
     }
-    if (True(types & IR::Type::U32)) {
+    if (True(types & IR::Type::U32) || profile.has_broken_spirv_vector_access_chain) {
         DefineConstBuffers(*this, info, &UniformDefinitions::U32, binding, U32[1], 'u',
                            sizeof(u32));
     }
@@ -1163,7 +1163,7 @@ void EmitContext::DefineStorageBuffers(const Info& info, u32& binding) {
         DefineSsbos(*this, storage_types.S16, &StorageDefinitions::S16, info, binding, S16,
                     sizeof(u16));
     }
-    if (True(used_types & IR::Type::U32)) {
+    if (True(used_types & IR::Type::U32) || profile.has_broken_spirv_vector_access_chain) {
         DefineSsbos(*this, storage_types.U32, &StorageDefinitions::U32, info, binding, U32[1],
                     sizeof(u32));
     }

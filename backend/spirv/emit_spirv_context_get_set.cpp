@@ -101,7 +101,7 @@ std::optional<OutAttr> OutputAttrPointer(EmitContext& ctx, IR::Attribute attr) {
 }
 
 Id GetCbuf(EmitContext& ctx, Id result_type, Id UniformDefinitions::*member_ptr, u32 element_size,
-           const IR::Value& binding, const IR::Value& offset, const Id indirect_func) {
+           const IR::Value& binding, const IR::Value& offset, const Id indirect_func, u32 element_offset = 0) {
     Id buffer_offset;
     const Id uniform_type{ctx.uniform_types.*member_ptr};
     if (offset.IsImmediate()) {
@@ -115,6 +115,10 @@ Id GetCbuf(EmitContext& ctx, Id result_type, Id UniformDefinitions::*member_ptr,
     } else {
         buffer_offset = ctx.Def(offset);
     }
+
+    if (element_offset)
+        buffer_offset = ctx.OpIAdd(ctx.U32[1], buffer_offset, ctx.Const(element_offset));
+
     if (!binding.IsImmediate()) {
         return ctx.OpFunctionCall(result_type, indirect_func, ctx.Def(binding), buffer_offset);
     }
@@ -268,8 +272,16 @@ Id EmitGetCbufF32(EmitContext& ctx, const IR::Value& binding, const IR::Value& o
 
 Id EmitGetCbufU32x2(EmitContext& ctx, const IR::Value& binding, const IR::Value& offset) {
     if (ctx.profile.support_descriptor_aliasing) {
-        return GetCbuf(ctx, ctx.U32[2], &UniformDefinitions::U32x2, sizeof(u32[2]), binding, offset,
-                       ctx.load_const_func_u32x2);
+        if (ctx.profile.has_broken_spirv_vector_access_chain) {
+            return ctx.OpCompositeConstruct(ctx.U32[2],
+                    GetCbuf(ctx, ctx.U32[1], &UniformDefinitions::U32, sizeof(u32), binding, offset,
+                            ctx.load_const_func_u32, 0),
+                    GetCbuf(ctx, ctx.U32[1], &UniformDefinitions::U32, sizeof(u32), binding, offset,
+                            ctx.load_const_func_u32, 1));
+        } else {
+            return GetCbuf(ctx, ctx.U32[2], &UniformDefinitions::U32x2, sizeof(u32[2]), binding, offset,
+                           ctx.load_const_func_u32x2);
+        }
     } else {
         const Id vector{GetCbufU32x4(ctx, binding, offset)};
         return ctx.OpCompositeConstruct(ctx.U32[2], GetCbufElement(ctx, vector, offset, 0u),

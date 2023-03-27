@@ -80,6 +80,8 @@ struct Profile {
     bool has_broken_spirv_subgroup_shuffle{};
     /// Maximum number of invocations in a subgroup, required if `has_broken_spirv_subgroup_shuffle` is true
     u32 max_subgroup_size{};
+    /// Some drivers have broken indirect access chains for vector types
+    bool has_broken_spirv_vector_access_chain{};
     /// HACK: Subgroup shuffle can be extremely costly to emulate on GPUs not supporting it in HW
     bool disable_subgroup_shuffle{};
 
