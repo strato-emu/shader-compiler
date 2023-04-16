@@ -413,6 +413,7 @@ IR::Program GenerateGeometryPassthrough(ObjectPool<IR::Inst>& inst_pool,
     program.stage = Stage::Geometry;
     program.output_topology = output_topology;
     program.output_vertices = GetOutputTopologyVertices(output_topology);
+    program.invocations = 1;
 
     program.is_geometry_passthrough = false;
     program.info.loads.mask = source_program.info.stores.mask;
