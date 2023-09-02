@@ -8,6 +8,7 @@
 #include <shader_compiler/frontend/ir/modifiers.h>
 #include <shader_compiler/frontend/ir/value.h>
 #include <shader_compiler/profile.h>
+#include <shader_compiler/common/log.h>
 
 namespace Shader::Backend::GLSL {
 namespace {

@@ -6,6 +6,7 @@
 #include <shader_compiler/frontend/ir/program.h>
 #include <shader_compiler/profile.h>
 #include <shader_compiler/runtime_info.h>
+#include <shader_compiler/common/log.h>
 
 namespace Shader::Backend::GLSL {
 namespace {

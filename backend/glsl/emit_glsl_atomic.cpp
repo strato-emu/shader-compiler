@@ -6,6 +6,7 @@
 #include <shader_compiler/backend/glsl/emit_glsl_instructions.h>
 #include <shader_compiler/backend/glsl/glsl_emit_context.h>
 #include <shader_compiler/frontend/ir/value.h>
+#include <shader_compiler/common/log.h>
 
 namespace Shader::Backend::GLSL {
 namespace {

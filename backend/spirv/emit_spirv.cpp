@@ -13,6 +13,7 @@
 #include <shader_compiler/backend/spirv/spirv_emit_context.h>
 #include <shader_compiler/frontend/ir/basic_block.h>
 #include <shader_compiler/frontend/ir/program.h>
+#include <shader_compiler/common/log.h>
 
 namespace Shader::Backend::SPIRV {
 namespace {

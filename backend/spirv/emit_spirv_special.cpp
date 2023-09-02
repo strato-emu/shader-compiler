@@ -4,6 +4,7 @@
 #include <shader_compiler/backend/spirv/emit_spirv.h>
 #include <shader_compiler/backend/spirv/emit_spirv_instructions.h>
 #include <shader_compiler/backend/spirv/spirv_emit_context.h>
+#include <shader_compiler/common/log.h>
 
 namespace Shader::Backend::SPIRV {
 namespace {

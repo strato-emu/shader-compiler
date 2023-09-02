@@ -5,6 +5,7 @@
 #include <shader_compiler/backend/glasm/glasm_emit_context.h>
 #include <shader_compiler/frontend/ir/value.h>
 #include <shader_compiler/profile.h>
+#include <shader_compiler/common/log.h>
 
 namespace Shader::Backend::GLASM {
 

@@ -4,6 +4,7 @@
 #include <shader_compiler/common/bit_field.h>
 #include <shader_compiler/common/common_types.h>
 #include <shader_compiler/frontend/maxwell/translate/impl/impl.h>
+#include <shader_compiler/common/log.h>
 
 namespace Shader::Maxwell {
 namespace {

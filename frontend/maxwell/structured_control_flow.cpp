@@ -20,6 +20,7 @@
 #include <shader_compiler/frontend/maxwell/translate/translate.h>
 #include <shader_compiler/host_translate_info.h>
 #include <shader_compiler/object_pool.h>
+#include <shader_compiler/common/log.h>
 
 namespace Shader::Maxwell {
 namespace {
